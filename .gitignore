@@ -31,5 +31,5 @@ build/
 
 ### VS Code ###
 .vscode/
-!/src/main/resources/oauth-google-client.yaml
-!/src/main/resources/oauth-wso-client.yaml
+/src/main/resources/oauth-google-client.yaml
+/src/main/resources/oauth-wso-client.yaml
