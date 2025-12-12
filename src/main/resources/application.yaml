@@ -1,0 +1,44 @@
+server:
+  port: 8082
+  shutdown: graceful
+
+spring:
+  config:
+    import: classpath:oauth-google-client.yaml
+  application:
+    name: spring-oauth2-client
+  cloud:
+    gateway:
+
+      server:
+        webflux:
+          default-filters:
+            - SaveSession
+            - TokenRelay
+          routes:
+            - id: spring-resource-server
+              uri: ${RESOURCE_SERVER:http://localhost:8080}/spring-resource-server/
+              predicates:
+                - Path=/spring-resource-server/**
+  security:
+    oauth2:
+      client:
+        registration:
+          wso2:
+            provider: wso2
+            authorization-grant-type: authorization_code
+            client-id: MFrlQ_RW57B77xwGjpUnGkicQs4a
+            client-secret: N8jJ7pHluH35wsEdlKBImx13Wuka
+            redirect-uri: "{baseUrl}/login/oauth2/code/wso2"
+            scope: openid,profile
+        provider:
+          wso2:
+            issuer-uri: ${WSO2IS_URL:https://localhost:9443}/oauth2/token
+
+logging:
+  level:
+    org:
+      springframework:
+        web:
+          HttpLogging: trace
+        security : DEBUG

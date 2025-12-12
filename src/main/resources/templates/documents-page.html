@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <title>Documite</title>
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/ui-darkness/jquery-ui.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/site.css"/>
+
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/getDocuments">Documite</a>
+        </div>
+    </div>
+</nav>
+<div class="container">
+
+    <div class="search-box">
+        <h1> <a href="/getDocuments">Documite</a></h1>
+
+        <!-- Simple search form that submits to /search -->
+        <form th:action="@{/getDocuments}" method="post" id="searchForm" th:object="${formData}" autocomplete="off">
+            <input id="q" name="q"  type="search" placeholder="Search..." th:field="*{q}" />
+            <button type="submit">Search</button>
+        </form>
+
+        <!-- Suggestions container (populated by JS) -->
+        <div id="suggestions" class="suggestions" style="display:none; margin-left: 65px; margin-top:0px;"></div>
+    </div>
+
+    <!-- Results rendered by Thymeleaf when server returns results -->
+    <div class="results" th:if="${results}">
+        <div th:each="r : ${results}" class="result-item">
+            <div class="result-title" th:text="${r.title}">Result title</div>
+            <div class="result-snippet" th:text="${r.snippet}">A short snippet...</div>
+            <a th:href="${r.url}" th:text="${r.url}"></a>
+        </div>
+    </div>
+
+
+
+    <table class="table" th:if="${documentsList}">
+        <thead>
+        <tr>
+            <th>Document</th>
+            <th>Issued</th>
+            <th>Validity</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="document: ${documentsList}">
+            <td><a th:text="${document.docName}"  th:href="${document.docLocation}" target="_blank"></a>
+            </td>
+            <td th:text="${document.docYear}">Issued</td>
+            <td th:text="${document.docValidity}">Validity</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<footer class="footer navbar-inverse navbar-fixed-bottom">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4"><p class="text-muted">@Copyright 2025 Poorvik Angadi</p></div>
+        </div>
+    </div>
+</footer>
+
+<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="js/site.js"></script>
+</body>
+</html>
