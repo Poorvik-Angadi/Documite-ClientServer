@@ -26,7 +26,7 @@ import org.springframework.session.config.annotation.web.server.EnableSpringWebS
 import org.springframework.web.server.WebFilter;
 import reactor.core.publisher.Mono;
 
-//url login: {basePath}/oauth2/authorization/wso2
+//url login: {basePath}/oauth2/authorization/google
 //url logout: POST {basePath}/logout with form data: csrf=<CSRF_token>
 @Configuration
 @EnableWebFluxSecurity
@@ -63,7 +63,7 @@ public class SecurityConfig {
                 )
 
                 .exceptionHandling(exceptionHandling -> exceptionHandling
-                        .authenticationEntryPoint((new RedirectServerAuthenticationEntryPoint("/oauth2/authorization/wso2"))))
+                        .authenticationEntryPoint((new RedirectServerAuthenticationEntryPoint("/oauth2/authorization/google"))))
                 .oauth2Login(Customizer.withDefaults())
                 .logout(logout -> logout.logoutSuccessHandler(oidcLogoutSuccessHandler(clientRegistrationRepository)))
                 //.csrf(csrf -> csrf.csrfTokenRepository(CookieServerCsrfTokenRepository.withHttpOnlyFalse()))

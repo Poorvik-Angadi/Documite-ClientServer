@@ -4,7 +4,6 @@ package com.angadi.springoauthclient.controllers;
 import com.angadi.springoauthclient.business.services.GetDocumentsService;
 import com.angadi.springoauthclient.business.services.Requests.DocumentsServiceRequest;
 import com.angadi.springoauthclient.models.requests.FormData;
-import com.angadi.springoauthclient.business.services.Responses.DocumentsServiceResponse;
 import com.angadi.springoauthclient.models.responses.DocumentsFormResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -51,7 +50,7 @@ public class DocumiteControllerClient {
     }
 
     @GetMapping
-    public String getDocumentsLoad( @RegisteredOAuth2AuthorizedClient("wso2") OAuth2AuthorizedClient authorizedClient,
+    public String getDocumentsLoad( @RegisteredOAuth2AuthorizedClient("google") OAuth2AuthorizedClient authorizedClient,
                                       @AuthenticationPrincipal OidcUser oidcUser, WebSession webSession, Model model){
         DocumentsServiceRequest request = new DocumentsServiceRequest();
         model.addAttribute("formData",new FormData());
@@ -59,7 +58,7 @@ public class DocumiteControllerClient {
     }
 
     @PostMapping("/getDocuments")
-    public String getDocumentsClient(@ModelAttribute FormData formData, @RegisteredOAuth2AuthorizedClient("wso2") OAuth2AuthorizedClient authorizedClient,
+    public String getDocumentsClient(@ModelAttribute FormData formData, @RegisteredOAuth2AuthorizedClient("google") OAuth2AuthorizedClient authorizedClient,
                                      @AuthenticationPrincipal OidcUser oidcUser, WebSession webSession, Model model){
 
 

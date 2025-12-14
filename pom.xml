@@ -12,7 +12,7 @@
 	<artifactId>spring-oauth-client</artifactId>
 	<version>0.0.1</version>
 	<name>spring-oauth-client</name>
-	<description>Front End client with WSO2</description>
+	<description>Front End client with Google</description>
 	<url/>
 	<licenses>
 		<license/>

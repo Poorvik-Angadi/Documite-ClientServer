@@ -4,6 +4,7 @@ package com.angadi.springoauthclient.business.services;
 import com.angadi.springoauthclient.business.services.Requests.DocumentsServiceRequest;
 import com.angadi.springoauthclient.business.services.Responses.DocumentsServiceResponse;
 import com.angadi.springoauthclient.models.responses.DocumentsFormResponse;
+import com.angadi.springoauthclient.util.CommonUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -29,13 +30,14 @@ public class GetDocumentsService {
         this.webClient = webClient;
     }
 
-    public Mono<List<DocumentsFormResponse>> getDocuments(DocumentsServiceRequest documentsServiceRequest, @RegisteredOAuth2AuthorizedClient("wso2") OAuth2AuthorizedClient authorizedClient,
+    public Mono<List<DocumentsFormResponse>> getDocuments(DocumentsServiceRequest documentsServiceRequest, @RegisteredOAuth2AuthorizedClient("google") OAuth2AuthorizedClient authorizedClient,
                                                              @AuthenticationPrincipal OidcUser oidcUser ){
 
         return webClient.post()
                 .uri("http://localhost:8080/spring-resource-server/getdocuments")
                 .contentType(MediaType.APPLICATION_JSON)
-                .attributes(ServerOAuth2AuthorizedClientExchangeFilterFunction.oauth2AuthorizedClient(authorizedClient))
+                .headers(headers -> headers.setBearerAuth(CommonUtility.getIdToken(oidcUser)))
+               // .attributes(ServerOAuth2AuthorizedClientExchangeFilterFunction.oauth2AuthorizedClient(authorizedClient))
                 .bodyValue(documentsServiceRequest)
                 .retrieve()
                 .bodyToFlux(DocumentsServiceResponse.class)
@@ -51,6 +53,7 @@ public class GetDocumentsService {
                     documentsFormResponse.setDocName(documentsServiceResponse.getDocName());
                     documentsFormResponse.setDocType(documentsServiceResponse.getDocType());
                     documentsFormResponse.setDocYear(documentsServiceResponse.getDocYear());
+                    documentsFormResponse.setDocLocation(documentsServiceResponse.getDocLocation());
                     if( documentsServiceResponse.getDocValidity()!=null && documentsServiceResponse.getDocValidity().length ==2) {
                         String s = documentsServiceResponse.getDocValidity()[0].toString().concat(" - ").concat( documentsServiceResponse.getDocValidity()[1].toString());
                         documentsFormResponse.setDocValidity(s);

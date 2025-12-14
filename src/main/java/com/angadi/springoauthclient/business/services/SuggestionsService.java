@@ -28,7 +28,7 @@ public class SuggestionsService {
     }
 
 
-    public Mono<List<String>> getSuggestions(@RegisteredOAuth2AuthorizedClient("wso2") OAuth2AuthorizedClient authorizedClient,
+    public Mono<List<String>> getSuggestions(@RegisteredOAuth2AuthorizedClient("google") OAuth2AuthorizedClient authorizedClient,
                                                           @AuthenticationPrincipal OidcUser oidcUser ){
         return webClient.post()
                 .uri("http://localhost:8080/spring-resource-server/getSuggestions")
