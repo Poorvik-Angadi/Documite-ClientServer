@@ -6,8 +6,8 @@ spring:
           wso2:
             provider: wso2
             authorization-grant-type: authorization_code
-            client-id: MFrlQ_RW57B77xwGjpUnGkicQs4a
-            client-secret: N8jJ7pHluH35wsEdlKBImx13Wuka
+            client-id: <Client ID>
+            client-secret: <Client Secret>
             redirect-uri: "{baseUrl}/login/oauth2/code/wso2"
             scope: openid,profile
         provider:
